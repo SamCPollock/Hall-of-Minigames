@@ -60,7 +60,7 @@ public class scr_FPScontroller : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isInConsoleRadius)
         {
             if (isTakingCharacterControl)
                 GoToExtractionUI();
