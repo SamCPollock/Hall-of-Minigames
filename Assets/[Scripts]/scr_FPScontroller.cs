@@ -19,6 +19,9 @@ public class scr_FPScontroller : MonoBehaviour
 
 
     public bool isInConsoleRadius = false;
+    public bool isTakingCharacterControl = true;
+
+    public GameObject ExtractionUI;
 
     private void Start()
     {
@@ -31,24 +34,56 @@ public class scr_FPScontroller : MonoBehaviour
 
     private void Update()
     {
-        // Cam Inputs
-        float mouseX = Input.GetAxis("Mouse X") * camHoriSpeed;
-        float mouseY = Input.GetAxis("Mouse Y") * camVertiSpeed;
+        if (isTakingCharacterControl)
+        {
+            // Cam Inputs
+            float mouseX = Input.GetAxis("Mouse X") * camHoriSpeed;
+            float mouseY = Input.GetAxis("Mouse Y") * camVertiSpeed;
 
-        // Movement Inputs
-        float horiInput = Input.GetAxis("Horizontal") * movementSpeed;
-        float vertiInput = Input.GetAxis("Vertical") * movementSpeed;
-
-        Vector3 moveBy = horiInput * transform.right + vertiInput * transform.forward;
-
-        rb.velocity = moveBy;
+            // Movement Inputs
+            float horiInput = Input.GetAxis("Horizontal") * movementSpeed;
+            float vertiInput = Input.GetAxis("Vertical") * movementSpeed;
 
 
-        yRotation += mouseX;
-        xRotation += mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90, 90);
 
-        cam.transform.eulerAngles = new Vector3(xRotation, transform.eulerAngles.y, 0.0f);
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, 0);
+            Vector3 moveBy = horiInput * transform.right + vertiInput * transform.forward;
+
+            rb.velocity = moveBy;
+
+
+            yRotation += mouseX;
+            xRotation += mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90, 90);
+
+            cam.transform.eulerAngles = new Vector3(xRotation, transform.eulerAngles.y, 0.0f);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, yRotation, 0);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isTakingCharacterControl)
+                GoToExtractionUI();
+            else
+                LeaveExtractionUI();
+        }
+    }
+
+    private void GoToExtractionUI()
+    {
+        ExtractionUI.SetActive(true);
+        isTakingCharacterControl = false;
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    private void LeaveExtractionUI()
+    {
+        ExtractionUI.SetActive(false);
+        isTakingCharacterControl = true;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }
