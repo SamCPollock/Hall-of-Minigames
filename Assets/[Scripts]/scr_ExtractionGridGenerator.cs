@@ -7,6 +7,10 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
 {
     public int rows;
     public int columns;
+
+    public int maxNumberOfRichOreTiles;
+    public int richOreTilesValue;
+
     public GameObject[,] gridArray;
 
     public GameObject resourcePanelPrefab;
@@ -34,9 +38,91 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
                 panelScript.row = r;
                 panelScript.column = c;
                 panelScript.generatorScript = gameObject.GetComponent<scr_ExtractionGridGenerator>();
-
             }
         }
+        foreach (GameObject tile in gridArray)
+        {
+            //      assign neighbours
+            scr_ResourcePanel tileScript = tile.GetComponent<scr_ResourcePanel>();
+
+            // above tile
+            if (tileScript.row > 0)
+            {
+                tileScript.aboveTile = gridArray[tileScript.row - 1, tileScript.column];
+            }
+
+            // left tile
+            if (tileScript.column > 0)
+            {
+                tileScript.leftTile = gridArray[tileScript.row, tileScript.column - 1];
+            }
+
+            // right tile
+            if (tileScript.column < columns - 1)
+            {
+                tileScript.rightTile = gridArray[tileScript.row, tileScript.column + 1];
+
+            }
+
+            // below tile
+            if (tileScript.row < rows - 1)
+            {
+                tileScript.belowTile = gridArray[tileScript.row + 1, tileScript.column];
+            }
+        }
+
+        AssignOreValues();
+
+             
+    }
+
+    public void AssignOreValues()
+    {
+      
+        for (int i = 0; i < maxNumberOfRichOreTiles; i++)
+        {
+
+            SetOreValue();
+        }
+
+        void SetOreValue()
+        {
+            int randomRow = Random.Range(0, rows - 1);
+            int randomColumn = Random.Range(0, columns - 1);
+
+            scr_ResourcePanel gridScript = gridArray[randomRow, randomColumn].GetComponent<scr_ResourcePanel>();
+
+            if (gridScript.oreValue == 0)
+            {
+                gridScript.oreValue = richOreTilesValue;
+            }
+            else
+            {
+                //SetOreValue();
+                Debug.Log("Tile already used");
+            }
+
+            //***Set Half ore Values****
+            
+            // up left
+
+                // up 
+
+                // up right
+
+                // left
+
+                // right
+
+                // down left
+
+                // down
+
+                // down right
+        }
+
+        
+
     }
 
     public void TileClicked(int rowClicked, int columnClicked)

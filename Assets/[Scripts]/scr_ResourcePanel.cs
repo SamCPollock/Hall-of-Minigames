@@ -12,6 +12,11 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
     public int column;
     public scr_ExtractionGridGenerator generatorScript;
 
+    public GameObject aboveTile;
+    public GameObject leftTile;
+    public GameObject rightTile;
+    public GameObject belowTile;
+
     void Start()
     {
         image = gameObject.GetComponent<Image>();

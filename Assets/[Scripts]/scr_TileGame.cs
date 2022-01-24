@@ -6,7 +6,6 @@ public class scr_TileGame : MonoBehaviour
 {
     public bool isInScanMode = true;
 
-
     void Start()
     {
         
