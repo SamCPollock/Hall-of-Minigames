@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class scr_TileGame : MonoBehaviour
 {
-    public bool isInScanMode = true;
+    public static bool isInScanMode = false;
+
+    public static int score = 0;
 
     void Start()
     {

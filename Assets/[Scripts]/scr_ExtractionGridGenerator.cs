@@ -102,35 +102,68 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
                 Debug.Log("Tile already used");
             }
 
-            //***Set Half ore Values****
-            
-            // up left
+            // Check 3x3 grid of tiles
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    if (r >= randomRow - 1 && r <= randomRow + 1)
+                    {
+                        if (c >= randomColumn - 1 && c <= randomColumn + 1)
+                        {
 
-                // up 
 
-                // up right
+                            scr_ResourcePanel _gridScript = gridArray[r, c].GetComponent<scr_ResourcePanel>();
 
-                // left
+                            Debug.Log("Adjacent tile found, " + " Rich Ore value = " + richOreTilesValue + " this tile current value: " + _gridScript.oreValue);
 
-                // right
+                            if (_gridScript.oreValue < (richOreTilesValue / 2))
+                            {
+                                Debug.Log("Setting adjacent tile value ");
 
-                // down left
+                                _gridScript.oreValue = (richOreTilesValue / 2);
+                            }
+                        }
+                    }
+                }
+            }
 
-                // down
+            // Check 4x4 grid of tiles
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    if (r >= randomRow - 2 && r <= randomRow + 2)
+                    {
+                        if (c >= randomColumn - 2 && c <= randomColumn + 2)
+                        {
 
-                // down right
+
+                            scr_ResourcePanel _gridScript = gridArray[r, c].GetComponent<scr_ResourcePanel>();
+
+                            Debug.Log("Adjacent tile found, " + " Rich Ore value = " + richOreTilesValue + " this tile current value: " + _gridScript.oreValue);
+
+                            if (_gridScript.oreValue < (richOreTilesValue / 4))
+                            {
+                                Debug.Log("Setting adjacent tile value ");
+
+                                _gridScript.oreValue = (richOreTilesValue / 4);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         
 
     }
 
-    public void TileClicked(int rowClicked, int columnClicked)
+    public void TileScanned(int rowClicked, int columnClicked)
     {
         Debug.Log("CLICKED ON TILE AT X:" + rowClicked + " Y:" + columnClicked);
-        gridArray[rowClicked, columnClicked].GetComponent<Image>().color = Color.cyan;
 
-
+        // Check 3x3 grid of tiles
         for (int r = 0; r < rows; r++)
         {
             for (int c = 0; c < columns; c++)
@@ -139,61 +172,21 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
                 {
                     if (c >= columnClicked - 1 && c <= columnClicked + 1)
                     {
-                        gridArray[r, c].GetComponent<Image>().color = Color.blue;
+                        scr_ResourcePanel _gridScript = gridArray[r, c].GetComponent<scr_ResourcePanel>();
+
+                        _gridScript.ScanReveal();
+                        //gridArray[r, c].GetComponent<Image>().color = Color.blue;
                     }
                 }
             }
         }
 
-        /* CHECKING EACH TILE HARDCODE
-        // above
-        if (rowClicked > 0)
-        {
-            // up left
-            if (columnClicked > 0)
-            {
-                gridArray[rowClicked - 1, columnClicked - 1].GetComponent<Image>().color = Color.yellow;
-            }
-            // up
-            gridArray[rowClicked - 1, columnClicked].GetComponent<Image>().color = Color.yellow;
-            
-            // up right
-            if (columnClicked < columns - 1)
-            {
-                gridArray[rowClicked - 1, columnClicked + 1].GetComponent<Image>().color = Color.yellow;
-            }
-        }
-        // left
-        if (columnClicked > 0)
-        {
-            gridArray[rowClicked, columnClicked - 1].GetComponent<Image>().color = Color.yellow;
-        }
+    }
 
-        // right
-        if (columnClicked < columns - 1)
-        {
-            gridArray[rowClicked, columnClicked + 1].GetComponent<Image>().color = Color.yellow;
-        }
-
-        // below
-        if (rowClicked < rows - 1)
-        {
-            // down left
-            if (columnClicked > 0)
-            {
-                gridArray[rowClicked + 1, columnClicked - 1].GetComponent<Image>().color = Color.yellow;
-            }
-            // down
-            gridArray[rowClicked + 1, columnClicked].GetComponent<Image>().color = Color.yellow;
-
-            // down right
-            if (columnClicked < columns - 1)
-            {
-                gridArray[rowClicked + 1, columnClicked + 1].GetComponent<Image>().color = Color.yellow;
-            }
-        }
-
-        */
+    public void TileExtracted(int rowClicked, int columnClicked)
+    {
+        scr_ResourcePanel _gridScript = gridArray[rowClicked, columnClicked].GetComponent<scr_ResourcePanel>();
+        _gridScript.Extract();
 
     }
 

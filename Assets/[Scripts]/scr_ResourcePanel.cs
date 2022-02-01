@@ -32,7 +32,14 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
     {
         image.color = Color.green;
         // Send an event to scr_ExtractionGridGenerator with the row and column of the clicked tile. 
-        generatorScript.TileClicked(row, column);
+        if (scr_TileGame.isInScanMode)
+        {
+            generatorScript.TileScanned(row, column);
+        }
+        else
+        {
+            generatorScript.TileExtracted(row, column);
+        }
 
     }
     public void OnPointerEnter(PointerEventData eventData)
@@ -43,6 +50,37 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
     {
         //image.color = Color.grey;
 
+    }
+
+    public void ScanReveal()
+    {
+        if (oreValue == 100)
+        {
+            gameObject.GetComponent<Image>().color = Color.yellow;
+        }
+
+        else if (oreValue == 50)
+        {
+            gameObject.GetComponent<Image>().color = Color.red;
+        }
+
+        else if (oreValue == 25)
+        {
+            gameObject.GetComponent<Image>().color = Color.blue;
+
+        }
+
+        else
+        {
+            gameObject.GetComponent<Image>().color = Color.black;
+
+        }
+    }
+
+    public void Extract()
+    {
+        scr_TileGame.score += oreValue;
+        Debug.Log("CURRENT SCORE: " + scr_TileGame.score);
     }
 
 }
