@@ -131,6 +131,21 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
         gridArray[rowClicked, columnClicked].GetComponent<Image>().color = Color.cyan;
 
 
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = 0; c < columns; c++)
+            {
+                if (r >= rowClicked - 1 && r <= rowClicked + 1)
+                {
+                    if (c >= columnClicked - 1 && c <= columnClicked + 1)
+                    {
+                        gridArray[r, c].GetComponent<Image>().color = Color.blue;
+                    }
+                }
+            }
+        }
+
+        /* CHECKING EACH TILE HARDCODE
         // above
         if (rowClicked > 0)
         {
@@ -177,6 +192,8 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
                 gridArray[rowClicked + 1, columnClicked + 1].GetComponent<Image>().color = Color.yellow;
             }
         }
+
+        */
 
     }
 

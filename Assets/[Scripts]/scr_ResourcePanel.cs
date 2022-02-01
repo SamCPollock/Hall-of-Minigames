@@ -37,11 +37,11 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        image.color = Color.yellow;
+        //image.color = Color.yellow;
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        image.color = Color.grey;
+        //image.color = Color.grey;
 
     }
 

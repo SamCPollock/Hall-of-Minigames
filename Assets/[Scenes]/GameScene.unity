@@ -1461,8 +1461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30bc1ce4eaac1da4cbb9e4e8ff0e6466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 5
-  columns: 5
+  rows: 32
+  columns: 32
   maxNumberOfRichOreTiles: 0
   richOreTilesValue: 100
   resourcePanelPrefab: {fileID: 884372600246846194, guid: ac5a51f84fb40704d803cd13b46c42f8, type: 3}
