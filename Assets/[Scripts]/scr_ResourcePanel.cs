@@ -32,7 +32,6 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        image.color = Color.green;
         // Send an event to scr_ExtractionGridGenerator with the row and column of the clicked tile. 
         if (scr_TileGame.isInScanMode)
         {
@@ -41,6 +40,8 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
         else
         {
             generatorScript.TileExtracted(row, column);
+            image.color = Color.green;
+
         }
 
     }

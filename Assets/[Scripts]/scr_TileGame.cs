@@ -6,9 +6,11 @@ using TMPro;
 
 public class scr_TileGame : MonoBehaviour
 {
-    public static bool isInScanMode = true;
+    public static bool isInScanMode = false;
 
     public static int score = 0;
+    public static int remainingScans = 6;
+    public static int remainingExtracts= 3; 
 
     public Text buttonText;
     
@@ -17,7 +19,6 @@ public class scr_TileGame : MonoBehaviour
 
     private void Awake()
     {
-        scoreText = GameObject.Find("Resources Extracted Text").GetComponent<TextMeshProUGUI>();
     }
 
     public void ToggleMode()
@@ -39,6 +40,13 @@ public class scr_TileGame : MonoBehaviour
     {
         score += scoreToAdd;
 
+
+        scoreText = GameObject.Find("Resources Extracted Text").GetComponent<TextMeshProUGUI>();
         scoreText.text = "SCORE: " + score.ToString();
+
+        if (remainingExtracts == 0)
+        {
+            // game over 
+        }
     }
 }

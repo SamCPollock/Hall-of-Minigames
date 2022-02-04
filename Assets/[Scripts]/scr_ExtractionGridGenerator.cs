@@ -161,59 +161,69 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
 
     public void TileScanned(int rowClicked, int columnClicked)
     {
-        Debug.Log("CLICKED ON TILE AT X:" + rowClicked + " Y:" + columnClicked);
-
-        // Check 3x3 grid of tiles
-        for (int r = 0; r < rows; r++)
+        if (scr_TileGame.remainingScans > 0)
         {
-            for (int c = 0; c < columns; c++)
-            {
-                if (r >= rowClicked - 1 && r <= rowClicked + 1)
-                {
-                    if (c >= columnClicked - 1 && c <= columnClicked + 1)
-                    {
-                        scr_ResourcePanel _gridScript = gridArray[r, c].GetComponent<scr_ResourcePanel>();
+            scr_TileGame.remainingScans--;
 
-                        _gridScript.ScanReveal();
-                        //gridArray[r, c].GetComponent<Image>().color = Color.blue;
+            Debug.Log("CLICKED ON TILE AT X:" + rowClicked + " Y:" + columnClicked);
+
+            // Check 3x3 grid of tiles
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    if (r >= rowClicked - 1 && r <= rowClicked + 1)
+                    {
+                        if (c >= columnClicked - 1 && c <= columnClicked + 1)
+                        {
+                            scr_ResourcePanel _gridScript = gridArray[r, c].GetComponent<scr_ResourcePanel>();
+
+                            _gridScript.ScanReveal();
+                            //gridArray[r, c].GetComponent<Image>().color = Color.blue;
+                        }
                     }
                 }
             }
+
         }
 
     }
 
     public void TileExtracted(int rowClicked, int columnClicked)
     {
-        scr_ResourcePanel _gridScript = gridArray[rowClicked, columnClicked].GetComponent<scr_ResourcePanel>();
-
-
-        // Check 3x3 grid of tiles
-        for (int r = 0; r < rows; r++)
+        if (scr_TileGame.remainingExtracts > 0)
         {
-            for (int c = 0; c < columns; c++)
+            scr_TileGame.remainingExtracts--;
+            scr_ResourcePanel _gridScript = gridArray[rowClicked, columnClicked].GetComponent<scr_ResourcePanel>();
+
+
+            // Check 3x3 grid of tiles
+            for (int r = 0; r < rows; r++)
             {
-                if (r >= rowClicked - 1 && r <= rowClicked+ 1)
+                for (int c = 0; c < columns; c++)
                 {
-                    if (c >= columnClicked - 1 && c <= columnClicked+ 1)
+                    if (r >= rowClicked - 1 && r <= rowClicked + 1)
                     {
-
-
-                        scr_ResourcePanel __gridScript = gridArray[r, c].GetComponent<scr_ResourcePanel>();
-
-
-                        if (__gridScript.oreValue == 50 )
+                        if (c >= columnClicked - 1 && c <= columnClicked + 1)
                         {
 
-                            __gridScript.oreValue = 25;
+
+                            scr_ResourcePanel __gridScript = gridArray[r, c].GetComponent<scr_ResourcePanel>();
+
+
+                            if (__gridScript.oreValue == 50)
+                            {
+
+                                __gridScript.oreValue = 25;
+                            }
                         }
                     }
                 }
             }
+
+
+            _gridScript.Extract();
         }
-
-
-        _gridScript.Extract();
 
 
     }
