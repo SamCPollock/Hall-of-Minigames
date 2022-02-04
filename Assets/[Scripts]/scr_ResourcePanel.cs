@@ -14,6 +14,7 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
     public int column;
     public scr_ExtractionGridGenerator generatorScript;
 
+    // Not used for current implementation, but remaining in for potential further functionality! 
     public GameObject aboveTile;
     public GameObject leftTile;
     public GameObject rightTile;
@@ -86,6 +87,8 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
         
         Debug.Log("CURRENT SCORE: " + scr_TileGame.score);
         scr_TileGame.UpdateScore(oreValue);
+
+        scr_TileGame.ShowMessage("Collected " + oreValue + " ore.");
 
         oreValue = 0;
 

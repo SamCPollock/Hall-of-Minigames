@@ -115,11 +115,9 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
 
                             scr_ResourcePanel _gridScript = gridArray[r, c].GetComponent<scr_ResourcePanel>();
 
-                            Debug.Log("Adjacent tile found, " + " Rich Ore value = " + richOreTilesValue + " this tile current value: " + _gridScript.oreValue);
 
                             if (_gridScript.oreValue < (richOreTilesValue / 2))
                             {
-                                Debug.Log("Setting adjacent tile value ");
 
                                 _gridScript.oreValue = (richOreTilesValue / 2);
                             }
@@ -141,11 +139,9 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
 
                             scr_ResourcePanel _gridScript = gridArray[r, c].GetComponent<scr_ResourcePanel>();
 
-                            Debug.Log("Adjacent tile found, " + " Rich Ore value = " + richOreTilesValue + " this tile current value: " + _gridScript.oreValue);
 
                             if (_gridScript.oreValue < (richOreTilesValue / 4))
                             {
-                                Debug.Log("Setting adjacent tile value ");
 
                                 _gridScript.oreValue = (richOreTilesValue / 4);
                             }
@@ -164,6 +160,7 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
         if (scr_TileGame.remainingScans > 0)
         {
             scr_TileGame.remainingScans--;
+            scr_TileGame.UpdateUI();
 
             Debug.Log("CLICKED ON TILE AT X:" + rowClicked + " Y:" + columnClicked);
 
@@ -194,8 +191,11 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
         if (scr_TileGame.remainingExtracts > 0)
         {
             scr_TileGame.remainingExtracts--;
+            scr_TileGame.UpdateUI();
+
             scr_ResourcePanel _gridScript = gridArray[rowClicked, columnClicked].GetComponent<scr_ResourcePanel>();
 
+            _gridScript.Extract();
 
             // Check 3x3 grid of tiles
             for (int r = 0; r < rows; r++)
@@ -216,13 +216,17 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
 
                                 __gridScript.oreValue = 25;
                             }
+
+                            else if (__gridScript.oreValue == 25)
+                            {
+                                __gridScript.oreValue = 0;
+                            }
                         }
                     }
                 }
             }
 
 
-            _gridScript.Extract();
         }
 
 

@@ -15,6 +15,9 @@ public class scr_TileGame : MonoBehaviour
     public Text buttonText;
     
     public static TextMeshProUGUI scoreText;
+    public static TextMeshProUGUI remainingScansText;
+    public static TextMeshProUGUI remainingExtractsText;
+    public static TextMeshProUGUI messageText;
 
 
     private void Awake()
@@ -41,12 +44,33 @@ public class scr_TileGame : MonoBehaviour
         score += scoreToAdd;
 
 
-        scoreText = GameObject.Find("Resources Extracted Text").GetComponent<TextMeshProUGUI>();
-        scoreText.text = "SCORE: " + score.ToString();
-
         if (remainingExtracts == 0)
         {
             // game over 
         }
     }
+
+    public static void UpdateUI()
+    {
+        // Score text
+        scoreText = GameObject.Find("Resources Extracted Text").GetComponent<TextMeshProUGUI>();
+        scoreText.text = "SCORE: " + score.ToString();
+
+        // Remaining scans text
+        remainingScansText = GameObject.Find("Scans Remaining Text").GetComponent<TextMeshProUGUI>();
+        remainingScansText.text = "SCANS REMAINING: " + remainingScans.ToString();
+
+        // Remaining extracts text
+        remainingExtractsText = GameObject.Find("Extracts Remaining Text").GetComponent<TextMeshProUGUI>();
+        remainingExtractsText.text = "EXTRACTS REMAINING: " + remainingExtracts.ToString();
+    }
+
+    public static void ShowMessage(string messageToDisplay)
+    {
+        messageText = GameObject.Find("Message Text").GetComponent<TextMeshProUGUI>();
+        messageText.text = messageToDisplay;
+
+
+    }
+
 }
