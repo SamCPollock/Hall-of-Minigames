@@ -8,6 +8,8 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
 {
     public Image image;
     public int oreValue;
+
+
     public int row;
     public int column;
     public scr_ExtractionGridGenerator generatorScript;
@@ -79,8 +81,13 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
 
     public void Extract()
     {
-        scr_TileGame.score += oreValue;
+        //scr_TileGame.score += oreValue;
+        
         Debug.Log("CURRENT SCORE: " + scr_TileGame.score);
+        scr_TileGame.UpdateScore(oreValue);
+
+        oreValue = 0;
+
     }
 
 }
