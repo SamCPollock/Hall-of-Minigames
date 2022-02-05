@@ -161,8 +161,9 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
         {
             scr_TileGame.remainingScans--;
             scr_TileGame.UpdateUI();
+            scr_TileGame.ShowMessage("Scanned a tile.");
 
-            Debug.Log("CLICKED ON TILE AT X:" + rowClicked + " Y:" + columnClicked);
+
 
             // Check 3x3 grid of tiles
             for (int r = 0; r < rows; r++)
@@ -183,6 +184,11 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
             }
 
         }
+        else
+        {
+            scr_TileGame.ShowMessage("NO SCANS REMAINING.");
+
+        }
 
     }
 
@@ -191,11 +197,12 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
         if (scr_TileGame.remainingExtracts > 0)
         {
             scr_TileGame.remainingExtracts--;
-            scr_TileGame.UpdateUI();
 
             scr_ResourcePanel _gridScript = gridArray[rowClicked, columnClicked].GetComponent<scr_ResourcePanel>();
 
             _gridScript.Extract();
+
+            scr_TileGame.UpdateUI();
 
             // Check 3x3 grid of tiles
             for (int r = 0; r < rows; r++)
@@ -226,6 +233,12 @@ public class scr_ExtractionGridGenerator : MonoBehaviour
                 }
             }
 
+
+        }
+
+        else
+        {
+            scr_TileGame.ShowMessage("NO EXTRACTS REMAINING.");
 
         }
 

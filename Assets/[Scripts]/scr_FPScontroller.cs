@@ -78,7 +78,7 @@ public class scr_FPScontroller : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    private void LeaveExtractionUI()
+    public void LeaveExtractionUI()
     {
         ExtractionUI.SetActive(false);
         isTakingCharacterControl = true;

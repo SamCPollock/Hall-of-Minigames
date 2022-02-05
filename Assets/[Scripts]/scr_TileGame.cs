@@ -19,6 +19,8 @@ public class scr_TileGame : MonoBehaviour
     public static TextMeshProUGUI remainingExtractsText;
     public static TextMeshProUGUI messageText;
 
+    public GameObject gameOverCanvas;
+
 
     private void Awake()
     {
@@ -47,6 +49,8 @@ public class scr_TileGame : MonoBehaviour
         if (remainingExtracts == 0)
         {
             // game over 
+            GameObject.Find("GameOverCanvas").transform.GetChild(0).gameObject.SetActive(true);
+            GameObject.Find("GameOverScore").GetComponent<TextMeshProUGUI>().text = "SCORE: " + score.ToString();
         }
     }
 
@@ -69,8 +73,7 @@ public class scr_TileGame : MonoBehaviour
     {
         messageText = GameObject.Find("Message Text").GetComponent<TextMeshProUGUI>();
         messageText.text = messageToDisplay;
-
-
     }
+
 
 }

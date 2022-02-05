@@ -41,7 +41,11 @@ public class scr_ResourcePanel : MonoBehaviour, IPointerClickHandler, IPointerEn
         else
         {
             generatorScript.TileExtracted(row, column);
-            image.color = Color.green;
+            if (scr_TileGame.remainingExtracts > 0)
+
+            {
+                image.color = Color.green;
+            }
 
         }
 
