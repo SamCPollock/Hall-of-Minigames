@@ -18,11 +18,8 @@ public class scr_FPScontroller : MonoBehaviour
     Rigidbody rb;
 
 
-    public bool isInConsoleRadius = false;
-    public bool isInLockRadius = false;
     public bool isTakingCharacterControl = true;
 
-    public GameObject ExtractionUI;
 
     private void Start()
     {
@@ -61,36 +58,7 @@ public class scr_FPScontroller : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (isInConsoleRadius)
-            {
-
-                //if (isTakingCharacterControl)
-                //    GoToExtractionUI();
-                //else
-                //    LeaveExtractionUI();
-            }
-
-        }
     }
 
-    private void GoToExtractionUI()
-    {
-        ExtractionUI.SetActive(true);
-        isTakingCharacterControl = false;
-
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-    }
-
-    public void LeaveExtractionUI()
-    {
-        ExtractionUI.SetActive(false);
-        isTakingCharacterControl = true;
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
+  
 }

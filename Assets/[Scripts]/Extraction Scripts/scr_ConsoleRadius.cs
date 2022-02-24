@@ -15,7 +15,6 @@ public class scr_ConsoleRadius : MonoBehaviour
         {
             isActive = true;
             player = other.gameObject;
-            other.GetComponent<scr_FPScontroller>().isInConsoleRadius = true;
             scr_TooltipsManager.ActivateTooltipDisplay("Press 'Space'");
         }
     }
@@ -25,7 +24,6 @@ public class scr_ConsoleRadius : MonoBehaviour
         if (other.GetComponent<scr_FPScontroller>() != null)
         {
             isActive = false;
-            other.GetComponent<scr_FPScontroller>().isInConsoleRadius = false;
             scr_TooltipsManager.DeactivateTooltipDisplay();
 
         }
