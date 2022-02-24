@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class scr_ConsoleRadius : MonoBehaviour
+public class scr_LockpickRadius : MonoBehaviour
 {
 
     public GameObject player;
     public bool isActive = false;
-    public GameObject extractionUI; 
+    public GameObject lockpickUI;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,7 +15,7 @@ public class scr_ConsoleRadius : MonoBehaviour
         {
             isActive = true;
             player = other.gameObject;
-            scr_TooltipsManager.ActivateTooltipDisplay("Press 'Space' to Extract");
+            scr_TooltipsManager.ActivateTooltipDisplay("Press 'Space' To Lockpick");
         }
     }
 
@@ -35,17 +35,17 @@ public class scr_ConsoleRadius : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (extractionUI.active == false)
+                if (lockpickUI.active == false)
                 {
-                    extractionUI.SetActive(true);
+                    lockpickUI.SetActive(true);
 
                     player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = false;
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.Confined;
                 }
-                else if (extractionUI.active == true)
+                else if (lockpickUI.active == true)
                 {
-                    extractionUI.SetActive(false);
+                    lockpickUI.SetActive(false);
 
                     player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = true;
                     Cursor.visible = false;
