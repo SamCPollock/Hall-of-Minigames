@@ -22,102 +22,115 @@ public class scr_LockpickingGame : MonoBehaviour
     private float jigglingTime = 0;
 
 
-
+    private bool isLockpicking;
     private bool isTwisting = false;
+
+    public GameObject winPanel, losePanel;
 
     private void Start()
     {
+       
         Initialize();
+
+
     }
 
     void Update()
     {
-        float maxAngle = 20;
-
-        float distanceToGoal = Mathf.Abs(aimPick.transform.eulerAngles.z - goalAngle);
-        //print(distanceToGoal);
-        maxAngle = 90 - distanceToGoal;
-        if (maxAngle > 90)
+        if (isLockpicking)
         {
-            maxAngle = 90;
-        }
-        if (maxAngle < 5)
-        {
-            maxAngle = 5;
-        }
 
-        if (distanceToGoal < permissibleDistance)
-        {
-            maxAngle = 90;
-        }
+            float maxAngle = 20;
 
-
-        // Prevent overtwisting.
-        if (innerLock.transform.eulerAngles.z > maxAngle)
-        {
-            jigglePickAnimator.SetBool("isJiggling", true);
-
-            jigglingTime += Time.deltaTime;
-
-            if (jigglingTime >= jiggleEndurance)
+            float distanceToGoal = Mathf.Abs(aimPick.transform.eulerAngles.z - goalAngle);
+            //print(distanceToGoal);
+            maxAngle = 90 - distanceToGoal;
+            if (maxAngle > 90)
             {
-                BreakPick();
+                maxAngle = 90;
+            }
+            if (maxAngle < 5)
+            {
+                maxAngle = 5;
             }
 
-            //print("OVERTURNED LOCK");
-            innerLock.transform.eulerAngles = new Vector3(0, 0, maxAngle);
-        }
-
-        if (isTwisting == false)
-        {
-            // rotate back to center
-            float lockLerp = Mathf.LerpAngle(innerLock.transform.eulerAngles.z, 0, Time.deltaTime * 20);
-            innerLock.transform.eulerAngles = new Vector3(0, 0, lockLerp);
-
-        }
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
-        {
-            // rotate left
-            isTwisting = true;
-            innerLock.transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
-
-            if (innerLock.transform.eulerAngles.z >= 90)
+            if (distanceToGoal < permissibleDistance)
             {
-                WinGame();
+                maxAngle = 90;
             }
-        } else
-        {
-            isTwisting = false;
-            jigglePickAnimator.SetBool("isJiggling", false);
 
+
+            // Prevent overtwisting.
+            if (innerLock.transform.eulerAngles.z > maxAngle)
+            {
+                jigglePickAnimator.SetBool("isJiggling", true);
+
+                jigglingTime += Time.deltaTime;
+
+                if (jigglingTime >= jiggleEndurance)
+                {
+                    BreakPick();
+                }
+
+                //print("OVERTURNED LOCK");
+                innerLock.transform.eulerAngles = new Vector3(0, 0, maxAngle);
+            }
+
+            if (isTwisting == false)
+            {
+                // rotate back to center
+                float lockLerp = Mathf.LerpAngle(innerLock.transform.eulerAngles.z, 0, Time.deltaTime * 20);
+                innerLock.transform.eulerAngles = new Vector3(0, 0, lockLerp);
+
+            }
+
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
+            {
+                // rotate left
+                isTwisting = true;
+                innerLock.transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
+
+                if (innerLock.transform.eulerAngles.z >= 90)
+                {
+                    WinGame();
+                }
+            }
+            else
+            {
+                isTwisting = false;
+                jigglePickAnimator.SetBool("isJiggling", false);
+
+            }
+
+            var mousePos = Input.mousePosition;
+            mousePos.z = aimPick.transform.position.z;
+
+
+            mouseFollower.transform.position = mousePos;
+
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+            Vector2 direction = new Vector2(mousePos.x - aimPick.transform.position.x, mousePos.y - aimPick.transform.position.y);
+
+
+            aimPick.transform.up = direction;
         }
 
-        var mousePos = Input.mousePosition;
-        mousePos.z = aimPick.transform.position.z;
-
-
-        mouseFollower.transform.position = mousePos;
-
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-        Vector2 direction = new Vector2(mousePos.x - aimPick.transform.position.x, mousePos.y - aimPick.transform.position.y);
-
-
-        aimPick.transform.up = direction;
-        
     }
 
     public void LoseGame()
     {
         print("---YOU LOSE---");
+        losePanel.SetActive(true);
+        isLockpicking = false;
     }
 
     public void WinGame()
     {
         print("---YOU WIN---");
-
+        winPanel.SetActive(true);
+        isLockpicking = false;
     }
 
     private void BreakPick()
@@ -136,6 +149,10 @@ public class scr_LockpickingGame : MonoBehaviour
 
     public void Initialize()
     {
+        isLockpicking = true;
+        winPanel.SetActive(false);
+        losePanel.SetActive(false);
+
         goalAngle = Random.Range(20, 340);
         picksRemaining = startingPicks;
 

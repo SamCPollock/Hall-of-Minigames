@@ -30,7 +30,7 @@ public class scr_Timer : MonoBehaviour
 
         if (timeRemaining <= 0)
         {
-
+            GameObject.FindObjectOfType<scr_LockpickingGame>().LoseGame();
         }
     }
 }

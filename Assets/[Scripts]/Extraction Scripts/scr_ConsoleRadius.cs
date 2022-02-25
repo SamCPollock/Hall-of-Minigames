@@ -37,21 +37,31 @@ public class scr_ConsoleRadius : MonoBehaviour
             {
                 if (extractionUI.active == false)
                 {
-                    extractionUI.SetActive(true);
-
-                    player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = false;
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.Confined;
+                    LaunchExtraction();
                 }
                 else if (extractionUI.active == true)
                 {
-                    extractionUI.SetActive(false);
-
-                    player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = true;
-                    Cursor.visible = false;
-                    Cursor.lockState = CursorLockMode.Locked;
+                    QuitExtraction();
                 }
             }
         }
+    }
+
+    public void LaunchExtraction()
+    {
+        extractionUI.SetActive(true);
+
+        player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void QuitExtraction()
+    {
+        extractionUI.SetActive(false);
+
+        player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

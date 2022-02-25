@@ -37,22 +37,34 @@ public class scr_LockpickRadius : MonoBehaviour
             {
                 if (lockpickUI.active == false)
                 {
-                    lockpickUI.SetActive(true);
-                    lockpickUI.GetComponent<scr_LockpickingGame>().Initialize();
-
-                    player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = false;
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.Confined;
+                    LaunchLockpick();  
                 }
                 else if (lockpickUI.active == true)
                 {
-                    lockpickUI.SetActive(false);
-
-                    player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = true;
-                    Cursor.visible = false;
-                    Cursor.lockState = CursorLockMode.Locked;
-                }
+                    QuitLockpick();
+                }   
             }
         }
+    }
+
+
+    public void LaunchLockpick()
+    {
+        lockpickUI.SetActive(true);
+        lockpickUI.GetComponent<scr_LockpickingGame>().Initialize();
+
+        player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void QuitLockpick()
+    {
+        lockpickUI.SetActive(false);
+
+        player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
 }
