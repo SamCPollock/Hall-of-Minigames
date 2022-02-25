@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class scr_LockpickingGame : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class scr_LockpickingGame : MonoBehaviour
     public float goalAngle;
     public float permissibleDistance;
     public Animator jigglePickAnimator;
+    public TextMeshProUGUI picksRemainingText;
 
     public int startingPicks;
     private int picksRemaining;
@@ -128,12 +130,16 @@ public class scr_LockpickingGame : MonoBehaviour
         }
 
         jigglingTime = 0;
+        picksRemainingText.text = "Picks Remaining: " + picksRemaining.ToString();
+
     }
 
     public void Initialize()
     {
         goalAngle = Random.Range(20, 340);
         picksRemaining = startingPicks;
+
+        picksRemainingText.text = "Picks Remaining: " + picksRemaining.ToString();
 
         GameObject.FindObjectOfType<scr_Timer>().Initialize();
 
