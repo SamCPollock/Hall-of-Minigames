@@ -9,20 +9,28 @@ public class scr_LockpickingGame : MonoBehaviour
     public GameObject mouseFollower;
 
     public float rotateSpeed;
+    public float goalAngle; 
 
 
     private bool isTwisting = false;
 
     void Update()
     {
-        float maxAngle = 0;
+        float maxAngle = 20;
+
+        print("Aimpick angle = " + (aimPick.transform.eulerAngles.z) + ", Goal Angle = " + goalAngle + "Difference = " + (aimPick.transform.eulerAngles.z - goalAngle));
+
+        if (aimPick.transform.eulerAngles.z - goalAngle < 20)
+        {
+            maxAngle = 90;
+        }
 
 
         // Prevent overtwisting.
-        if (innerLock.transform.eulerAngles.z > 90)
+        if (innerLock.transform.eulerAngles.z > maxAngle)
         {
-            print("OVERTURNED LOCK");
-            innerLock.transform.eulerAngles = new Vector3(0, 0, 90f);
+            //print("OVERTURNED LOCK");
+            innerLock.transform.eulerAngles = new Vector3(0, 0, maxAngle);
         }
 
         if (isTwisting == false)
@@ -33,7 +41,7 @@ public class scr_LockpickingGame : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             // rotate left
             isTwisting = true;
@@ -45,7 +53,7 @@ public class scr_LockpickingGame : MonoBehaviour
 
         var mousePos = Input.mousePosition;
         mousePos.z = aimPick.transform.position.z;
-        print(Camera.main.ScreenToWorldPoint(mousePos));
+        //print(Camera.main.ScreenToWorldPoint(mousePos));
 
 
         mouseFollower.transform.position = mousePos;
