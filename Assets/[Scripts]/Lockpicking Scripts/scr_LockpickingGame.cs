@@ -11,6 +11,7 @@ public class scr_LockpickingGame : MonoBehaviour
     public float rotateSpeed;
     public float goalAngle;
     public float permissibleDistance;
+    public Animator jigglePickAnimator;
 
 
     private bool isTwisting = false;
@@ -63,9 +64,12 @@ public class scr_LockpickingGame : MonoBehaviour
             // rotate left
             isTwisting = true;
             innerLock.transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
+            jigglePickAnimator.SetBool("isJiggling", true);
         } else
         {
             isTwisting = false;
+            jigglePickAnimator.SetBool("isJiggling", false);
+
         }
 
         var mousePos = Input.mousePosition;
@@ -97,5 +101,7 @@ public class scr_LockpickingGame : MonoBehaviour
     public void Initialize()
     {
         goalAngle = Random.Range(20, 340);
+        GameObject.FindObjectOfType<scr_Timer>().Initialize();
+
     }
 }

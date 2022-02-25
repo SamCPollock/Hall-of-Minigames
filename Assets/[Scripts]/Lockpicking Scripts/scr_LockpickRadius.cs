@@ -38,6 +38,7 @@ public class scr_LockpickRadius : MonoBehaviour
                 if (lockpickUI.active == false)
                 {
                     lockpickUI.SetActive(true);
+                    lockpickUI.GetComponent<scr_LockpickingGame>().Initialize();
 
                     player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = false;
                     Cursor.visible = true;

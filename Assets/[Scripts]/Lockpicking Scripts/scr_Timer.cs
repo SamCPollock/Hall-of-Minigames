@@ -28,5 +28,9 @@ public class scr_Timer : MonoBehaviour
         timeRemaining -= Time.deltaTime;
         myText.text = Mathf.Round(timeRemaining).ToString();
 
+        if (timeRemaining <= 0)
+        {
+
+        }
     }
 }
