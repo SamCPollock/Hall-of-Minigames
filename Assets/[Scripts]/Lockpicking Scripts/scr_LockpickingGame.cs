@@ -9,22 +9,39 @@ public class scr_LockpickingGame : MonoBehaviour
     public GameObject mouseFollower;
 
     public float rotateSpeed;
-    public float goalAngle; 
+    public float goalAngle;
+    public float permissibleDistance;
 
 
     private bool isTwisting = false;
+
+    private void Start()
+    {
+        Initialize();
+    }
 
     void Update()
     {
         float maxAngle = 20;
 
-        print("Aimpick angle = " + (aimPick.transform.eulerAngles.z) + ", Goal Angle = " + goalAngle + "Difference = " + (aimPick.transform.eulerAngles.z - goalAngle));
+        float distanceToGoal = Mathf.Abs(aimPick.transform.eulerAngles.z - goalAngle);
+        //print(distanceToGoal);
+        maxAngle = 90 - distanceToGoal;
+        if (maxAngle > 90)
+        {
+            maxAngle = 90;
+        }
+        if (maxAngle < 5)
+        {
+            maxAngle = 5;
+        }
 
-        if (aimPick.transform.eulerAngles.z - goalAngle < 20)
+        if (distanceToGoal < permissibleDistance)
         {
             maxAngle = 90;
         }
 
+        print(maxAngle);
 
         // Prevent overtwisting.
         if (innerLock.transform.eulerAngles.z > maxAngle)
@@ -41,7 +58,7 @@ public class scr_LockpickingGame : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
         {
             // rotate left
             isTwisting = true;
@@ -53,7 +70,6 @@ public class scr_LockpickingGame : MonoBehaviour
 
         var mousePos = Input.mousePosition;
         mousePos.z = aimPick.transform.position.z;
-        //print(Camera.main.ScreenToWorldPoint(mousePos));
 
 
         mouseFollower.transform.position = mousePos;
@@ -63,7 +79,23 @@ public class scr_LockpickingGame : MonoBehaviour
 
         Vector2 direction = new Vector2(mousePos.x - aimPick.transform.position.x, mousePos.y - aimPick.transform.position.y);
 
-        aimPick.transform.up = direction;
 
+        aimPick.transform.up = direction;
+        
+    }
+
+    public void LoseGame()
+    {
+
+    }
+
+    public void WinGame()
+    {
+
+    }
+
+    public void Initialize()
+    {
+        goalAngle = Random.Range(20, 340);
     }
 }
