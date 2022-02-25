@@ -11,14 +11,17 @@ public class scr_LockpickingGame : MonoBehaviour
 
     public float rotateSpeed;
     public float goalAngle;
-    public float permissibleDistance;
+    private float permissibleDistance;
     public Animator jigglePickAnimator;
     public TextMeshProUGUI picksRemainingText;
+    public TextMeshProUGUI diffultyText;
+    public TextMeshProUGUI skillText;
+
 
     public int startingPicks;
     private int picksRemaining;
 
-    public float jiggleEndurance; 
+    public float skillLevel; 
     private float jigglingTime = 0;
 
 
@@ -30,7 +33,7 @@ public class scr_LockpickingGame : MonoBehaviour
     private void Start()
     {
        
-        Initialize();
+        Initialize(1);
 
 
     }
@@ -67,7 +70,7 @@ public class scr_LockpickingGame : MonoBehaviour
 
                 jigglingTime += Time.deltaTime;
 
-                if (jigglingTime >= jiggleEndurance)
+                if (jigglingTime >= skillLevel)
                 {
                     BreakPick();
                 }
@@ -124,6 +127,8 @@ public class scr_LockpickingGame : MonoBehaviour
         print("---YOU LOSE---");
         losePanel.SetActive(true);
         isLockpicking = false;
+        jigglePickAnimator.SetBool("isJiggling", false);
+
     }
 
     public void WinGame()
@@ -131,6 +136,8 @@ public class scr_LockpickingGame : MonoBehaviour
         print("---YOU WIN---");
         winPanel.SetActive(true);
         isLockpicking = false;
+        jigglePickAnimator.SetBool("isJiggling", false);
+
     }
 
     private void BreakPick()
@@ -147,8 +154,10 @@ public class scr_LockpickingGame : MonoBehaviour
 
     }
 
-    public void Initialize()
+    public void Initialize(int difficultyLevel)
     {
+
+        permissibleDistance = 30 - (5 * difficultyLevel);
         isLockpicking = true;
         winPanel.SetActive(false);
         losePanel.SetActive(false);
@@ -157,6 +166,8 @@ public class scr_LockpickingGame : MonoBehaviour
         picksRemaining = startingPicks;
 
         picksRemainingText.text = "Picks Remaining: " + picksRemaining.ToString();
+        diffultyText.text = "Difficulty level: " + difficultyLevel.ToString() + " - (determines acceptable range for success)";
+        skillText.text = "Skill level: " + skillLevel.ToString() + " - (determines durability of picks)";
 
         GameObject.FindObjectOfType<scr_Timer>().Initialize();
 

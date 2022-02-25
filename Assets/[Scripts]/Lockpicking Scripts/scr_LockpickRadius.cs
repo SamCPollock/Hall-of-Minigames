@@ -9,6 +9,8 @@ public class scr_LockpickRadius : MonoBehaviour
     public bool isActive = false;
     public GameObject lockpickUI;
 
+    public int difficultyLevel; 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<scr_FPScontroller>() != null)
@@ -51,7 +53,7 @@ public class scr_LockpickRadius : MonoBehaviour
     public void LaunchLockpick()
     {
         lockpickUI.SetActive(true);
-        lockpickUI.GetComponent<scr_LockpickingGame>().Initialize();
+        lockpickUI.GetComponent<scr_LockpickingGame>().Initialize(difficultyLevel);
 
         player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = false;
         Cursor.visible = true;
