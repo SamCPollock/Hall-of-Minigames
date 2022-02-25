@@ -13,6 +13,13 @@ public class scr_LockpickingGame : MonoBehaviour
     public float permissibleDistance;
     public Animator jigglePickAnimator;
 
+    public int startingPicks;
+    private int picksRemaining;
+
+    public float jiggleEndurance; 
+    private float jigglingTime = 0;
+
+
 
     private bool isTwisting = false;
 
@@ -42,11 +49,19 @@ public class scr_LockpickingGame : MonoBehaviour
             maxAngle = 90;
         }
 
-        print(maxAngle);
 
         // Prevent overtwisting.
         if (innerLock.transform.eulerAngles.z > maxAngle)
         {
+            jigglePickAnimator.SetBool("isJiggling", true);
+
+            jigglingTime += Time.deltaTime;
+
+            if (jigglingTime >= jiggleEndurance)
+            {
+                BreakPick();
+            }
+
             //print("OVERTURNED LOCK");
             innerLock.transform.eulerAngles = new Vector3(0, 0, maxAngle);
         }
@@ -64,7 +79,11 @@ public class scr_LockpickingGame : MonoBehaviour
             // rotate left
             isTwisting = true;
             innerLock.transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
-            jigglePickAnimator.SetBool("isJiggling", true);
+
+            if (innerLock.transform.eulerAngles.z >= 90)
+            {
+                WinGame();
+            }
         } else
         {
             isTwisting = false;
@@ -90,17 +109,32 @@ public class scr_LockpickingGame : MonoBehaviour
 
     public void LoseGame()
     {
-
+        print("---YOU LOSE---");
     }
 
     public void WinGame()
     {
+        print("---YOU WIN---");
 
+    }
+
+    private void BreakPick()
+    {
+        picksRemaining--;
+        jigglePickAnimator.SetTrigger("break");
+        if (picksRemaining <= 0)
+        {
+            LoseGame();
+        }
+
+        jigglingTime = 0;
     }
 
     public void Initialize()
     {
         goalAngle = Random.Range(20, 340);
+        picksRemaining = startingPicks;
+
         GameObject.FindObjectOfType<scr_Timer>().Initialize();
 
     }
