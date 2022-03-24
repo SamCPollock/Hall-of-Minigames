@@ -35,6 +35,7 @@ public class scr_Tile : MonoBehaviour
             icon.sprite = _item.sprite;
         }
     }
+
     public Image icon;
 
     public Button button;
@@ -79,9 +80,9 @@ public class scr_Tile : MonoBehaviour
     {
         if (isMatched)
         {
-            //Item = null;
             if (icon)
             {
+                //Item = null;
                 Destroy(icon);
                 timer.AddTime(1f);
                 timer.AddScore(1);

@@ -80,6 +80,7 @@ public class scr_Board2 : MonoBehaviour
             if (!_selection.Contains(tile))
             {
                 _selection.Add(tile);
+                tile.icon.color = Color.green;
             }
 
             if (_selection.Count < 2) return;
@@ -87,6 +88,9 @@ public class scr_Board2 : MonoBehaviour
             Debug.Log($"Selected tiles at ({_selection[0].r}, {_selection[0].c}) and ({_selection[1].r}, {_selection[1].c}) ");
 
             await Swap(_selection[0], _selection[1]);
+
+            _selection[0].icon.color = Color.white;
+            _selection[1].icon.color = Color.white; 
 
             _selection.Clear();
 
@@ -137,12 +141,15 @@ public class scr_Board2 : MonoBehaviour
             {
                 scr_Tile _leftNeighbour = tile.leftNeighbour.GetComponent<scr_Tile>();
                 scr_Tile _rightNeighbour = tile.rightNeighbour.GetComponent<scr_Tile>();
-                if (_leftNeighbour.Item == tile.Item && _rightNeighbour.Item == tile.Item)
+                if (_leftNeighbour.icon != null && _rightNeighbour.icon != null)
                 {
+                    if (_leftNeighbour.Item == tile.Item && _rightNeighbour.Item == tile.Item)
+                    {
 
-                    tile.isMatched = true;
-                    _leftNeighbour.isMatched = true;
-                    _rightNeighbour.isMatched = true;
+                        tile.isMatched = true;
+                        _leftNeighbour.isMatched = true;
+                        _rightNeighbour.isMatched = true;
+                    }
                 }
             }
 
@@ -150,11 +157,14 @@ public class scr_Board2 : MonoBehaviour
             {
                 scr_Tile _upNeighbour = tile.upNeighbour.GetComponent<scr_Tile>();
                 scr_Tile _downNeighbour = tile.downNeighbour.GetComponent<scr_Tile>();
-                if (_upNeighbour.Item == tile.Item && _downNeighbour.Item == tile.Item)
+                if (_upNeighbour.icon != null && _downNeighbour.icon != null)
                 {
-                    tile.isMatched = true;
-                    _upNeighbour.isMatched = true;
-                    _downNeighbour.isMatched = true;
+                    if (_upNeighbour.Item == tile.Item && _downNeighbour.Item == tile.Item)
+                    {
+                        tile.isMatched = true;
+                        _upNeighbour.isMatched = true;
+                        _downNeighbour.isMatched = true;
+                    }
                 }
             }
         }
