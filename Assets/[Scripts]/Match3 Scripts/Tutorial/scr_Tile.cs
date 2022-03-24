@@ -15,6 +15,8 @@ public class scr_Tile : MonoBehaviour
 
     public bool isClickable = true;
 
+    public scr_Match3Timer timer;
+
     public scr_Item Item
     {
         get => _item;
@@ -44,6 +46,7 @@ public class scr_Tile : MonoBehaviour
     private void Start()
     {
             button.onClick.AddListener(() => scr_Board2.Instance.Select(this));
+            timer = GameObject.Find("Timer").GetComponent<scr_Match3Timer>();
         
     }
 
@@ -77,7 +80,13 @@ public class scr_Tile : MonoBehaviour
         if (isMatched)
         {
             //Item = null;
-            Destroy(icon);
+            if (icon)
+            {
+                Destroy(icon);
+                timer.AddTime(1f);
+                timer.AddScore(1);
+
+            }
             //isMatched = false;
         }
     }
