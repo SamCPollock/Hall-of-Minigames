@@ -9,6 +9,8 @@ public class scr_Tile : MonoBehaviour
 
     private scr_Item _item;
 
+    public GameObject upNeighbour, downNeighbour, leftNeighbour, rightNeighbour; 
+
     public scr_Item Item
     {
         get => _item;
@@ -29,5 +31,40 @@ public class scr_Tile : MonoBehaviour
     }
     public Image icon;
 
-    public Button button; 
+    public Button button;
+
+    // return neighbours 
+
+    // TODO: Add a raycast to get neighbour tiles???? That might be good? 
+
+    private void Start()
+    {
+        button.onClick.AddListener(() => scr_Board2.Instance.Select(this));
+    }
+
+    private void Update()
+    {
+        GetNeighbours();
+    }
+
+    private GameObject GetAdjacent(Vector2 castDir)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, castDir);
+
+        if (hit.collider != null && hit.collider.gameObject != this.gameObject)
+        {
+            return hit.collider.gameObject;
+        }
+
+        return null;
+    }
+    public void GetNeighbours()
+    {
+        upNeighbour = GetAdjacent(Vector2.up);
+        downNeighbour = GetAdjacent(Vector2.down);
+        leftNeighbour = GetAdjacent(Vector2.left);
+        rightNeighbour = GetAdjacent(Vector2.right);
+
+    }
+
 }
