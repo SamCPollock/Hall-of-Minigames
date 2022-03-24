@@ -7,6 +7,7 @@ public class scr_Match3Radius : MonoBehaviour
     public GameObject player;
     public bool isActive = false;
     public GameObject match3UI;
+    public GameObject match3Board; 
 
     private void OnTriggerEnter(Collider other)
     {
@@ -58,6 +59,7 @@ public class scr_Match3Radius : MonoBehaviour
     public void QuitMatch3()
     {
         match3UI.SetActive(false);
+        match3Board.SetActive(false);
 
         player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = true;
         Cursor.visible = false;

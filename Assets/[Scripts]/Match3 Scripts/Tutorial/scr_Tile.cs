@@ -9,7 +9,11 @@ public class scr_Tile : MonoBehaviour
 
     private scr_Item _item;
 
-    public GameObject upNeighbour, downNeighbour, leftNeighbour, rightNeighbour; 
+    public GameObject upNeighbour, downNeighbour, leftNeighbour, rightNeighbour;
+
+    public bool isMatched = false;
+
+    public bool isClickable = true;
 
     public scr_Item Item
     {
@@ -39,12 +43,13 @@ public class scr_Tile : MonoBehaviour
 
     private void Start()
     {
-        button.onClick.AddListener(() => scr_Board2.Instance.Select(this));
+            button.onClick.AddListener(() => scr_Board2.Instance.Select(this));
+        
     }
 
     private void Update()
     {
-        GetNeighbours();
+        //GetNeighbours();
     }
 
     private GameObject GetAdjacent(Vector2 castDir)
@@ -65,6 +70,16 @@ public class scr_Tile : MonoBehaviour
         leftNeighbour = GetAdjacent(Vector2.left);
         rightNeighbour = GetAdjacent(Vector2.right);
 
+    }
+
+    public void DestroyIfMatched()
+    {
+        if (isMatched)
+        {
+            //Item = null;
+            Destroy(icon);
+            //isMatched = false;
+        }
     }
 
 }
