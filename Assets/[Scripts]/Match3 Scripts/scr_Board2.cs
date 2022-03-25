@@ -15,6 +15,9 @@ public class scr_Board2 : MonoBehaviour
 
     public int Width;
     public int Height;
+    private int tileTypes;
+    public scr_Match3Timer timer; 
+
 
     //public int difficulty;
 
@@ -45,8 +48,11 @@ public class scr_Board2 : MonoBehaviour
     }
 
 
+
     public void InitializeBoard(int difficulty)
     {
+        timer.Initialize();
+        tileTypes = difficulty;
         foreach (scr_Row row in rows)
         {
             for (int i = 0; i < row.transform.childCount; i++)
@@ -57,6 +63,7 @@ public class scr_Board2 : MonoBehaviour
 
         for (int i = 0; i < tileList.Count; i++)
         {
+            tileList[i].icon.enabled = true;
             tileList[i].Item = scr_ItemDatabase.Items[UnityEngine.Random.Range(0, difficulty)];
             tileList[i].r = i / Width;
             tileList[i].c = i % Width;
@@ -67,6 +74,8 @@ public class scr_Board2 : MonoBehaviour
         //CheckForMatchesStartup();     //TODO: FIgure out why broken (getting the wrong tiles as matching) NOTE: Happens only when calling from Start() or InitializeBoard(). The same logic works fine after a swap!! 
         //CheckForMatches();
 
+        Invoke("CheckForMatchesStartup", 0.1f);
+
 
 
     }
@@ -74,7 +83,7 @@ public class scr_Board2 : MonoBehaviour
 
     public async void Select(scr_Tile tile)
     {
-        if (tile.icon != null)
+        if (tile.icon.enabled == true)
         {
 
             if (!_selection.Contains(tile))
@@ -141,7 +150,7 @@ public class scr_Board2 : MonoBehaviour
             {
                 scr_Tile _leftNeighbour = tile.leftNeighbour.GetComponent<scr_Tile>();
                 scr_Tile _rightNeighbour = tile.rightNeighbour.GetComponent<scr_Tile>();
-                if (_leftNeighbour.icon != null && _rightNeighbour.icon != null)
+                if (_leftNeighbour.icon.enabled == true && _rightNeighbour.icon.enabled == true)
                 {
                     if (_leftNeighbour.Item == tile.Item && _rightNeighbour.Item == tile.Item)
                     {
@@ -157,7 +166,7 @@ public class scr_Board2 : MonoBehaviour
             {
                 scr_Tile _upNeighbour = tile.upNeighbour.GetComponent<scr_Tile>();
                 scr_Tile _downNeighbour = tile.downNeighbour.GetComponent<scr_Tile>();
-                if (_upNeighbour.icon != null && _downNeighbour.icon != null)
+                if (_upNeighbour.icon.enabled == true && _downNeighbour.icon.enabled == true)
                 {
                     if (_upNeighbour.Item == tile.Item && _downNeighbour.Item == tile.Item)
                     {
@@ -197,23 +206,23 @@ public class scr_Board2 : MonoBehaviour
                 }
             }
 
-            //if (tile.upNeighbour != null && tile.downNeighbour != null)
-            //{
-            //    scr_Tile _upNeighbour = tile.upNeighbour.GetComponent<scr_Tile>();
-            //    scr_Tile _downNeighbour = tile.downNeighbour.GetComponent<scr_Tile>();
-            //    if (_upNeighbour.Item == tile.Item && _downNeighbour.Item == tile.Item)
-            //    {
-            //        matchedTiles.Add(tile);
-            //        Debug.Log("ADDING TILE " + tile.r + "," + tile.c);
+            if (tile.upNeighbour != null && tile.downNeighbour != null)
+            {
+                scr_Tile _upNeighbour = tile.upNeighbour.GetComponent<scr_Tile>();
+                scr_Tile _downNeighbour = tile.downNeighbour.GetComponent<scr_Tile>();
+                if (_upNeighbour.Item == tile.Item && _downNeighbour.Item == tile.Item)
+                {
+                    matchedTiles.Add(tile);
+                    Debug.Log("ADDING TILE " + tile.Item + ", " + tile.r + "," + tile.c);
 
-            //    }
-            //}
+                }
+            }
         }
 
-        foreach (scr_Tile tile in tileList)
-        {
-            Debug.Log("Tiles list: " + tile.Item + "at " + tile.r + "," + tile.c);
-        }
+        //foreach (scr_Tile tile in tileList)
+        //{
+        //    Debug.Log("Tiles list: " + tile.Item + "at " + tile.r + "," + tile.c);
+        //}
 
         print("Matching Tiles = " + matchedTiles.Count);
         if (matchedTiles.Count > 0)
@@ -222,13 +231,13 @@ public class scr_Board2 : MonoBehaviour
             foreach (scr_Tile matchedTile in matchedTiles)
             {
                 Debug.Log("MATCH TILE: Tile was: " + matchedTile.Item + "at " + matchedTile.r + ","+  matchedTile.c);
-                //matchedTile.Item = scr_ItemDatabase.Items[UnityEngine.Random.Range(0, difficulty)];
-                //Debug.Log("Now Tile is: " + matchedTile.Item);
+                matchedTile.Item = scr_ItemDatabase.Items[UnityEngine.Random.Range(0, tileTypes)];
+                Debug.Log("Now Tile is: " + matchedTile.Item);
 
             }
 
             //matchedTiles.Clear();
-            //CheckForMatchesStartup();
+            CheckForMatchesStartup();
         }
 
        

@@ -80,10 +80,11 @@ public class scr_Tile : MonoBehaviour
     {
         if (isMatched)
         {
-            if (icon)
+            if (icon.enabled == true)
             {
                 //Item = null;
-                Destroy(icon);
+                //Destroy(icon);
+                icon.enabled = false;
                 timer.AddTime(1f);
                 timer.AddScore(1);
 
