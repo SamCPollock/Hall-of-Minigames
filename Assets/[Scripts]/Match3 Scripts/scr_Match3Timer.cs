@@ -61,9 +61,15 @@ public class scr_Match3Timer : MonoBehaviour
         if (timeSinceLastMatch < comboBuffer)
         {
             score += 1;
+            audioManager.pitch = 1.2f;
+            audioManager.Play();
         }
+        else
+        {
+            audioManager.pitch = 0.9f;
+            audioManager.Play();
 
-        audioManager.Play();
+        }
         score += scoreToAdd;
         scoreText.text = "Score: " + score.ToString();
         timeSinceLastMatch = 0;
