@@ -156,6 +156,7 @@ public class scr_Board2 : MonoBehaviour
                     {
 
                         tile.isMatched = true;
+                        tile.AddScore();
                         _leftNeighbour.isMatched = true;
                         _rightNeighbour.isMatched = true;
                     }
@@ -171,6 +172,7 @@ public class scr_Board2 : MonoBehaviour
                     if (_upNeighbour.Item == tile.Item && _downNeighbour.Item == tile.Item)
                     {
                         tile.isMatched = true;
+                        tile.AddScore();
                         _upNeighbour.isMatched = true;
                         _downNeighbour.isMatched = true;
                     }

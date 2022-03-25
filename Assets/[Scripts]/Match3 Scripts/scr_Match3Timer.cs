@@ -7,10 +7,12 @@ using TMPro;
 public class scr_Match3Timer : MonoBehaviour
 {
     public Slider timerSlider;
+    public Slider comboSlider; 
     public float totalTime;
     public float remainingTime;
 
     public float timeSinceLastMatch;
+    public float comboBuffer = 2;
 
     public TextMeshProUGUI scoreText;
     public GameObject winScreen;
@@ -35,6 +37,7 @@ public class scr_Match3Timer : MonoBehaviour
         }
 
         timerSlider.value = (remainingTime / totalTime);
+        comboSlider.value = comboBuffer - timeSinceLastMatch;
 
         if (remainingTime <= 0)
         {
@@ -55,7 +58,11 @@ public class scr_Match3Timer : MonoBehaviour
 
     public void AddScore(int scoreToAdd)
     {
-        
+        if (timeSinceLastMatch < comboBuffer)
+        {
+            score += 1;
+        }
+
         audioManager.Play();
         score += scoreToAdd;
         scoreText.text = "Score: " + score.ToString();

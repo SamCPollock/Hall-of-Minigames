@@ -85,12 +85,17 @@ public class scr_Tile : MonoBehaviour
                 //Item = null;
                 //Destroy(icon);
                 icon.enabled = false;
-                timer.AddTime(1f);
-                timer.AddScore(1);
+
 
             }
-            //isMatched = false;
+            isMatched = false;
         }
+    }
+
+    public void AddScore()
+    {
+        timer.AddTime(3f);
+        timer.AddScore(1);
     }
 
 }
