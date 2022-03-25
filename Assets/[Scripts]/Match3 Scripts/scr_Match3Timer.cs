@@ -11,7 +11,7 @@ public class scr_Match3Timer : MonoBehaviour
     public float totalTime;
     public float remainingTime;
 
-    public float timeSinceLastMatch;
+    private float timeSinceLastMatch;
     public float comboBuffer = 2;
 
     public TextMeshProUGUI scoreText;
@@ -47,8 +47,12 @@ public class scr_Match3Timer : MonoBehaviour
 
     public void Initialize()
     {
+        Debug.Log("-------INITIALIZING TIMER");
         remainingTime = totalTime;
         score = 0;
+        timeSinceLastMatch = comboBuffer;
+        scoreText.text = "Score: " + score.ToString();
+
     }
 
     public void AddTime(float timeToAdd)
@@ -58,6 +62,8 @@ public class scr_Match3Timer : MonoBehaviour
 
     public void AddScore(int scoreToAdd)
     {
+        Debug.Log("Time since last match: " + timeSinceLastMatch + " Combo Buffer: " + comboBuffer);
+
         if (timeSinceLastMatch < comboBuffer)
         {
             score += 1;

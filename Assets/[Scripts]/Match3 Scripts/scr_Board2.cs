@@ -68,6 +68,7 @@ public class scr_Board2 : MonoBehaviour
             tileList[i].r = i / Width;
             tileList[i].c = i % Width;
             tileList[i].GetNeighbours();
+            tileList[i].isMatched = false;
 
         }
 
@@ -154,9 +155,11 @@ public class scr_Board2 : MonoBehaviour
                 {
                     if (_leftNeighbour.Item == tile.Item && _rightNeighbour.Item == tile.Item)
                     {
+                        if (!tile.isMatched)
+                            tile.AddScore();
 
                         tile.isMatched = true;
-                        tile.AddScore();
+                        Debug.Log("Tile:" + tile.r + tile.c + "Adding Score");
                         _leftNeighbour.isMatched = true;
                         _rightNeighbour.isMatched = true;
                     }
@@ -171,8 +174,10 @@ public class scr_Board2 : MonoBehaviour
                 {
                     if (_upNeighbour.Item == tile.Item && _downNeighbour.Item == tile.Item)
                     {
+                        if (!tile.isMatched)
+                            tile.AddScore();
                         tile.isMatched = true;
-                        tile.AddScore();
+                        Debug.Log("Tile:" + tile.r + tile.c + "Adding Score");
                         _upNeighbour.isMatched = true;
                         _downNeighbour.isMatched = true;
                     }
