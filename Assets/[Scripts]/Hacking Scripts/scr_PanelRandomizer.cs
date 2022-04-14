@@ -5,13 +5,16 @@ using TMPro;
 
 public class scr_PanelRandomizer : MonoBehaviour
 {
-    public string[] possibleStrings;
+    private string[] mPossibleStrings;
     public TextMeshProUGUI myTextMeshPro;
     private string myString;
 
+
+
     private void Start()
     {
-        myString = possibleStrings[Random.Range(0, possibleStrings.Length)];
+        mPossibleStrings = GameObject.Find("HackingCanvas").GetComponent<scr_HackingMinigame>().possibleStrings;
+        myString = mPossibleStrings[Random.Range(0, mPossibleStrings.Length)];
         myTextMeshPro.text = myString;
     }
 }
