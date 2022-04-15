@@ -7,6 +7,7 @@ public class scr_HackingRadius : MonoBehaviour
     public GameObject player;
     public bool isActive = false;
     public GameObject hackingUI;
+    public scr_HackingMinigame hackingMinigame; 
     //public GameObject match3Board;
 
     private void OnTriggerEnter(Collider other)
@@ -37,26 +38,27 @@ public class scr_HackingRadius : MonoBehaviour
             {
                 if (hackingUI.active == false)
                 {
-                    LaunchMatch3();
+                    LaunchHacking();
                 }
                 else if (hackingUI.active == true)
                 {
-                    QuitMatch3();
+                    QuitHacking();
                 }
             }
         }
     }
 
-    public void LaunchMatch3()
+    public void LaunchHacking()
     {
         hackingUI.SetActive(true);
+        hackingMinigame.InitializeHackingGame();
 
         player.GetComponent<scr_FPScontroller>().isTakingCharacterControl = false;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    public void QuitMatch3()
+    public void QuitHacking()
     {
         hackingUI.SetActive(false);
         //match3Board.SetActive(false);

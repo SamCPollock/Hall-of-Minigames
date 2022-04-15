@@ -12,30 +12,42 @@ public class scr_HackingMinigame : MonoBehaviour
     public string goalPassword;
     public string currentPassword; 
     public GameObject CodeMatrixObject;
+    public GameObject winScreen;
+    public GameObject loseScreen; 
     public bool isSelectingRow = false;
+    public scr_HackingTimer timer; 
 
     [Range(1, 3)]
     public int difficulty = 1;
+    [Range(1, 6)]
+    public int skillLevel = 1;
+
+    public scr_PanelCreator panelCreator;
 
     // Start is called before the first frame update
     void Start()
     {
- 
-            for (int i = 0; i < 4; i++)
-            {
-                goalPassword += possibleStrings[Random.Range(0, possibleStrings.Length  - (3 - difficulty))];
+        InitializeHackingGame();
+    }
 
-            }
+
+    public void InitializeHackingGame()
+    {
+        winScreen.SetActive(false);
+        loseScreen.SetActive(false);
+        timer.startingTime = skillLevel * 10;
+        timer.InitializeTimer();
+        currentPassword = "";
+        goalPassword = "";
+        for (int i = 0; i < 4; i++)
+        {
+            goalPassword += possibleStrings[Random.Range(0, possibleStrings.Length - (3 - difficulty))];
+
+        }
 
         goalPasswordTextObject.text = goalPassword;
+        panelCreator.CreatePanels();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
 
     public void SetClickablePanels(int clickedRow, int clickedColumn)
     {
@@ -85,6 +97,9 @@ public class scr_HackingMinigame : MonoBehaviour
 
     public void AddToPassword(string stringToAdd)
     {
+
+        Debug.Log("ADDING TO PASSWORD: " + stringToAdd);
+
         currentPassword += stringToAdd;
         currentPasswordTextObject.text = currentPassword;
 
@@ -92,13 +107,28 @@ public class scr_HackingMinigame : MonoBehaviour
         {
             // YOU WIN! 
             Debug.Log("YOU WIN!!!");
+            WinGame();
         }
 
         else if (currentPassword.Length == goalPassword.Length)
         {
             // YOU LOSE! 
             Debug.Log("YOU LOSE!!!");
-
+            LoseGame();
         }
+    }
+
+    public void WinGame()
+    {
+        winScreen.SetActive(true);
+        timer.isGameRunning = false;
+
+    }
+
+    public void LoseGame()
+    {
+        loseScreen.SetActive(true);
+        timer.isGameRunning = false;
+
     }
 }

@@ -12,6 +12,15 @@ public class scr_PanelCreator : MonoBehaviour
 
     private void Start()
     {
+        CreatePanels();
+    }
+
+    public void CreatePanels()
+    {
+        foreach(Transform child in gameObject.transform)
+        {
+            Destroy(child.gameObject);
+        }
         int totalPanels = rows * columns;
         gameObject.GetComponent<GridLayoutGroup>().constraintCount = columns;
 
@@ -23,6 +32,7 @@ public class scr_PanelCreator : MonoBehaviour
             panel.GetComponent<scr_Panel>().row = i % columns;
 
             panel.GetComponent<scr_Panel>().column = i / columns;
+            panel.GetComponent<scr_PanelRandomizer>().RandomizeString();
 
         }
     }

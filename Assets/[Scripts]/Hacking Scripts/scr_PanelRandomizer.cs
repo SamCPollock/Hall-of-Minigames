@@ -15,10 +15,15 @@ public class scr_PanelRandomizer : MonoBehaviour
 
     private void Start()
     {
+        RandomizeString();
+    }
+
+    public void RandomizeString()
+    {
         hackingMinigame = GameObject.Find("HackingCanvas").GetComponent<scr_HackingMinigame>();
         mPossibleStrings = hackingMinigame.possibleStrings;
 
-            myString = mPossibleStrings[Random.Range(0, mPossibleStrings.Length - (3 - hackingMinigame.difficulty))];
+        myString = mPossibleStrings[Random.Range(0, mPossibleStrings.Length - (3 - hackingMinigame.difficulty))];
 
         myTextMeshPro.text = myString;
     }
