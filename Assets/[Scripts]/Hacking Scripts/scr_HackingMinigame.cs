@@ -13,7 +13,9 @@ public class scr_HackingMinigame : MonoBehaviour
     public string currentPassword; 
     public GameObject CodeMatrixObject;
     public GameObject winScreen;
-    public GameObject loseScreen; 
+    public GameObject loseScreen;
+    public Slider difficultySlider;
+    public Slider skillLevelSlider; 
     public bool isSelectingRow = false;
     public scr_HackingTimer timer; 
 
@@ -33,11 +35,14 @@ public class scr_HackingMinigame : MonoBehaviour
 
     public void InitializeHackingGame()
     {
+        difficulty = ((int)difficultySlider.value);
+        skillLevel = ((int)skillLevelSlider.value);
         winScreen.SetActive(false);
         loseScreen.SetActive(false);
         timer.startingTime = skillLevel * 10;
         timer.InitializeTimer();
         currentPassword = "";
+        AddToPassword("");
         goalPassword = "";
         for (int i = 0; i < 4; i++)
         {

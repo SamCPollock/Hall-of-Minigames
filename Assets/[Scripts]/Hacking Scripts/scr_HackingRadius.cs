@@ -7,6 +7,8 @@ public class scr_HackingRadius : MonoBehaviour
     public GameObject player;
     public bool isActive = false;
     public GameObject hackingUI;
+    public GameObject hackingStartScreen;
+    public GameObject hackingGameScreen;
     public scr_HackingMinigame hackingMinigame; 
     //public GameObject match3Board;
 
@@ -60,6 +62,8 @@ public class scr_HackingRadius : MonoBehaviour
 
     public void QuitHacking()
     {
+        hackingStartScreen.SetActive(true);
+        hackingGameScreen.SetActive(false);
         hackingUI.SetActive(false);
         //match3Board.SetActive(false);
 
