@@ -7,14 +7,19 @@ public class scr_PanelRandomizer : MonoBehaviour
 {
     private string[] mPossibleStrings;
     public TextMeshProUGUI myTextMeshPro;
-    private string myString;
+    public string myString;
+
+    public scr_HackingMinigame hackingMinigame; 
 
 
 
     private void Start()
     {
-        mPossibleStrings = GameObject.Find("HackingCanvas").GetComponent<scr_HackingMinigame>().possibleStrings;
-        myString = mPossibleStrings[Random.Range(0, mPossibleStrings.Length)];
+        hackingMinigame = GameObject.Find("HackingCanvas").GetComponent<scr_HackingMinigame>();
+        mPossibleStrings = hackingMinigame.possibleStrings;
+
+            myString = mPossibleStrings[Random.Range(0, mPossibleStrings.Length - (3 - hackingMinigame.difficulty))];
+
         myTextMeshPro.text = myString;
     }
 }
